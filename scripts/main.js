@@ -1,13 +1,19 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var ReactRouter = require('react-router');
+var Router = ReactRouter.Router;
+var Route = ReactRouter.Route;
+var Navigation = ReactRouter.Navigation;
+var createBrowserHistory = require('history/lib/createBrowserHistory');
+
+
 /*
   App
 */
 
 var App = React.createClass({
   render: function() {
-    var name = "lex"
     return (
       <div className="catch-of-the-day">
         <div className="menu">
@@ -75,10 +81,9 @@ var Inventory = React.createClass({
 var StorePicker = React.createClass({
   
   render: function() {
-    var name = "lex"
     return (
       <form className="store-selector">
-        <h2>Please Enter A Store {name} </h2>
+        <h2>Please Enter A Store </h2>
         <input type="text" ref="storeId" required />
         <input type="Submit" defaultValue="Submit" />
       </form>
@@ -86,4 +91,11 @@ var StorePicker = React.createClass({
   }
 });
 
-ReactDOM.render(<App/>, document.querySelector('#main'));
+var routes = (
+  <Router history={createBrowserHistory()}>
+    <Route path="/" component={StorePicker}/>
+    <Route path="/store/:storeId" component={App}/>
+  </Router>
+)
+
+ReactDOM.render(routes, document.querySelector('#main'));
